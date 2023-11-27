@@ -2,8 +2,6 @@ namespace Loupedeck.OSCPlugin
 {
     using System;
     using System.Collections.Generic;
-    using System.Net;
-    using System.Runtime.CompilerServices;
     using System.Threading;
 
     // This class implements an example command that counts button presses.
@@ -29,6 +27,10 @@ namespace Loupedeck.OSCPlugin
             this.ActionEditor.AddControlEx(
                     new ActionEditorListbox("type", "Button Type").SetRequired()
             );
+            this.ActionEditor.AddControlEx(
+                    new ActionEditorListbox("color", "Color")
+            );
+
             this.ActionEditor.ListboxItemsRequested += OnActionEditorListboxItemsRequested;
             this.ActionEditor.ControlValueChanged += OnActionEditorControlValueChanged;
         }
@@ -39,7 +41,10 @@ namespace Loupedeck.OSCPlugin
             {
                 this.ActionEditor.ListboxItemsChanged("type");
             }
-            
+            else if (e.ControlName.EqualsNoCase("color"))
+            {
+                this.ActionEditor.ListboxItemsChanged("color");
+            }
         }
 
         private void OnActionEditorListboxItemsRequested(Object sender, ActionEditorListboxItemsRequestedEventArgs e)
@@ -49,6 +54,16 @@ namespace Loupedeck.OSCPlugin
                 e.AddItem("basic", "Basic", "Sends 1 to address");
                 e.AddItem("toggle", "Toggle", "Alternates 1 and 0 to address");
                 e.AddItem("momentary", "Momentary", "Sends 1 and then 0 to address");
+            }
+            else if (e.ControlName.EqualsNoCase("color"))
+            {
+                e.AddItem("white", "White", "");
+                e.AddItem("red", "Red", "");
+                e.AddItem("green", "Green", "");
+                e.AddItem("blue", "Blue", "");
+                e.AddItem("cyan", "Cyan", "");
+                e.AddItem("yellow", "Yellow", "");
+                e.AddItem("magenta", "Magenta", "");
             }
             else
             {
@@ -77,9 +92,11 @@ namespace Loupedeck.OSCPlugin
                     this.ActionImageChanged();
                     break;
                 case "momentary":
+                    _values[address] = 1;
                     OSCPlugin.sendOSC(address, 1);
                     this.ActionImageChanged();
                     Thread.Sleep(250);
+                    _values[address] = 0;
                     OSCPlugin.sendOSC(address, 0);
                     this.ActionImageChanged();
                     break;
@@ -87,21 +104,18 @@ namespace Loupedeck.OSCPlugin
             
             return true;
         }
-
-        // This method is called when Loupedeck needs to show the command on the console or the UI.
-        //protected override String GetCommandDisplayName(String actionParameter, PluginImageSize imageSize) =>
-        //    $"Press Counter{Environment.NewLine}{this._value}";
         
 
         protected override BitmapImage GetCommandImage(ActionEditorActionParameters actionParameter, int width, int height)
         {
             var pName = actionParameter.GetString("label");
             var address = actionParameter.GetString("address");
+            var color = actionParameter.GetString("color", "white");
             if (!_values.ContainsKey(address))
             {
                 _values[address] = 0;
             }
-            return (this.Plugin as OSCPlugin).BuildImage(PluginImageSize.Width90, "Loupedeck.OSCPlugin.Sprites.Button.Button" + (_values[address] == 1 ? "On" : "Off") + ".png", pName, false).ToImage();
+            return (this.Plugin as OSCPlugin).DrawProgressArc(PluginImageSize.Width90, OSCPlugin.ControlColors[$"{color}-dark"], OSCPlugin.ControlColors[color], _values[address], 0, 1, name:pName, isButton:true);
         }
     }
 }

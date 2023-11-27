@@ -31,6 +31,9 @@ namespace Loupedeck.OSCPlugin
             this.ActionEditor.AddControlEx(
                     new ActionEditorListbox("type", "Knob Type").SetRequired()
             );
+            this.ActionEditor.AddControlEx(
+                    new ActionEditorListbox("color", "Color")
+            );
             this.ActionEditor.ListboxItemsRequested += OnActionEditorListboxItemsRequested;
             this.ActionEditor.ControlValueChanged += OnActionEditorControlValueChanged;
         }
@@ -41,6 +44,10 @@ namespace Loupedeck.OSCPlugin
             {
                 this.ActionEditor.ListboxItemsChanged("type");
             }
+            else if (e.ControlName.EqualsNoCase("color"))
+            {
+                this.ActionEditor.ListboxItemsChanged("color");
+            }
         }
 
         private void OnActionEditorListboxItemsRequested(Object sender, ActionEditorListboxItemsRequestedEventArgs e)
@@ -49,6 +56,16 @@ namespace Loupedeck.OSCPlugin
             {
                 e.AddItem("raw", "Raw", "Raw value, no constraints to address");
                 e.AddItem("normal", "Normal", "Simple 0-100 value to address");
+            }
+            else if (e.ControlName.EqualsNoCase("color"))
+            {
+                e.AddItem("white", "White", "");
+                e.AddItem("red", "Red", "");
+                e.AddItem("green", "Green", "");
+                e.AddItem("blue", "Blue", "");
+                e.AddItem("cyan", "Cyan", "");
+                e.AddItem("yellow", "Yellow", "");
+                e.AddItem("magenta", "Magenta", "");
             }
             else
             {
@@ -106,6 +123,7 @@ namespace Loupedeck.OSCPlugin
             var address = actionParameter.GetString("address");
             var pName = actionParameter.GetString("label");
             var type = actionParameter.GetString("type");
+            var color = actionParameter.GetString("color", "white");
 
             if (!_values.ContainsKey(address))
             {
@@ -114,11 +132,11 @@ namespace Loupedeck.OSCPlugin
 
             if (type == "normal")
             {
-                return (this.Plugin as OSCPlugin).BuildImage(PluginImageSize.Width90, "Loupedeck.OSCPlugin.Sprites.NormalKnobOSC.Knob" + _values[address].ToString("000") + ".png", pName, false).ToImage();
+                return (this.Plugin as OSCPlugin).DrawProgressArc(PluginImageSize.Width60, OSCPlugin.ControlColors[$"{color}-dark"], OSCPlugin.ControlColors[color], _values[address], 0, 100, name: pName, isButton: false);
             }
             else
             {
-                return (this.Plugin as OSCPlugin).BuildImage(PluginImageSize.Width90, null, pName, false).ToImage();
+                return null;
             }
         }
 

@@ -1,13 +1,12 @@
 namespace Loupedeck.OSCPlugin
 {
     using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Globalization;
     using System.IO;
-    using System.Net.Sockets;
-    using System.Runtime.CompilerServices;
-
-    using Loupedeck.OSCPlugin.Actions;
-
     using SharpOSC;
+    using SkiaSharp;
 
     // This class contains the plugin-level logic of the Loupedeck plugin.
 
@@ -147,38 +146,113 @@ namespace Loupedeck.OSCPlugin
             //_udpListener.Close();
         }
 
-        private static readonly BitmapColor BitmapColorPink = new BitmapColor(255, 192, 203);
-
-        public BitmapBuilder BuildImage(PluginImageSize imageSize, String imageName, String text, Boolean selected)
+        public static Dictionary<string, BitmapColor> ControlColors = new Dictionary<string, BitmapColor>
         {
-            var bitmapBuilder = new BitmapBuilder(imageSize);
-            if(imageName != null)
+            {"white",new BitmapColor(255, 255, 255) },
+            {"red",new BitmapColor(255, 0, 0) },
+            {"green",new BitmapColor(0, 255, 0) },
+            {"blue",new BitmapColor(0, 0, 255) },
+            {"yellow",new BitmapColor(255, 255, 0) },
+            {"cyan",new BitmapColor(0, 255, 255) },
+            {"magenta",new BitmapColor(255, 0, 255) },
+
+            {"white-dark",new BitmapColor(140, 140, 140) },
+            {"red-dark",new BitmapColor(140, 0, 0) },
+            {"green-dark",new BitmapColor(0, 140, 0) },
+            {"blue-dark",new BitmapColor(0, 0, 140) },
+            {"yellow-dark",new BitmapColor(140, 140, 0) },
+            {"cyan-dark",new BitmapColor(0, 140, 140) },
+            {"magenta-dark",new BitmapColor(140, 0, 140) }
+        };
+
+        public BitmapImage DrawProgressArc(PluginImageSize imageSize, BitmapColor backgroundColor, BitmapColor foregroundColor, Decimal currentValue, Decimal minValue, Decimal maxValue,
+            String name = "", Boolean isButton=true)
+        {
+            // Prepare variables
+            var dim = imageSize == PluginImageSize.Width60 ? 50 : 80;
+            var percentage = (currentValue - minValue) / (maxValue - minValue) * 100;
+            var height = (Int32)(dim * 0.6);
+            var width = (Int32)(dim * 0.6);
+            var calculatedHeight = (Int32)(360 * percentage / 100);
+            var xCenter = dim / 2;
+            var yCenter = (Int32)(dim * 0.375);
+            var builder = new BitmapBuilder(dim, dim);
+
+            // Reset to black
+            builder.Clear(BitmapColor.Black);
+
+            // Draw volume bar and border
+            
+            const Int32 fontSize = 16;
+
+            var cmdSize = GetFontSize(fontSize, name, dim);
+
+            if (isButton == true)
             {
-                try
+                if (currentValue > 0)
                 {
-                    var image = EmbeddedResources.ReadImage(imageName);
-                    bitmapBuilder.DrawImage(image);
+                    builder.FillCircle(xCenter, yCenter, width / 2, foregroundColor);
                 }
-                catch (Exception ex)
-                {
-                    this.Log.Error($"Cannot load image {imageName}, exception {ex}");
-                }
+                builder.DrawArc(xCenter, yCenter, width / 2, 0.0f, 360, backgroundColor, 5.0f);
+                builder.DrawText(name, 0, dim / 2 - Convert.ToInt32(cmdSize * 0.6), dim, dim, foregroundColor, cmdSize);
+            }
+            else
+            {
+                calculatedHeight = (Int32)(height * percentage / 100);
+                
+                builder.FillRectangle(xCenter - (width / 2), yCenter + (height / 2), width, -calculatedHeight, backgroundColor);
+
+                var strokeSize = 3;
+                DrawRectangleOutline(builder, foregroundColor, xCenter, yCenter, width, -height, strokeSize);
+                
+                builder.DrawText((currentValue).ToString(CultureInfo.CurrentCulture), foregroundColor, cmdSize);
+                builder.DrawText(name, 0, dim / 2 - cmdSize/2, dim, dim, foregroundColor, cmdSize);
             }
 
-            if (!String.IsNullOrEmpty(text))
-            {
-                var x1 = bitmapBuilder.Width * 0.1;
-                var w = bitmapBuilder.Width * 0.8;
-                var y1 = bitmapBuilder.Height * 0.60;
-                var h = bitmapBuilder.Height * 0.3;
+            return builder.ToImage();
+        }
 
-                bitmapBuilder.DrawText(text, (Int32)x1, (Int32)y1, (Int32)w, (Int32)h,
-                                            BitmapColorPink,
-                                            imageSize == PluginImageSize.Width90 ? 18 : 18,
-                                            imageSize == PluginImageSize.Width90 ? 12 : 8, 1);
+        public void DrawRectangleOutline(BitmapBuilder builder, BitmapColor color, float xCenter, float yCenter, float width, float height, float strokeSize)
+        {
+            // Calculate half width and half height
+            float halfWidth = width / 2;
+            float halfHeight = height / 2;
+
+            // Calculate the coordinates of the rectangle corners
+            float left = xCenter - halfWidth;
+            float right = xCenter + halfWidth;
+            float top = yCenter - halfHeight;
+            float bottom = yCenter + halfHeight;
+
+            // Draw the four sides of the rectangle using DrawLine
+            builder.DrawLine(left, top, right, top, color, strokeSize);      // Top side
+            builder.DrawLine(right, top, right, bottom, color, strokeSize);  // Right side
+            builder.DrawLine(left, bottom, right, bottom, color, strokeSize);// Bottom side
+            builder.DrawLine(left, top, left, bottom, color, strokeSize);    // Left side
+        }
+
+        private static Int32 GetFontSize(Int32 fontSize, String text, Int32 dim)
+        {
+            // create a SKPaint object for measuring the text
+            var paint = new SKPaint
+            {
+                TextSize = fontSize,
+                IsAntialias = true
+            };
+
+            // measure the size of the text
+            var textBounds = new SKRect();
+            paint.MeasureText(text, ref textBounds);
+
+            // adjust the font size until the text fits within the bounds of the image
+            while (textBounds.Width > dim || textBounds.Height > dim)
+            {
+                fontSize -= 1;
+                paint.TextSize = fontSize;
+                paint.MeasureText(text, ref textBounds);
             }
 
-            return bitmapBuilder;
+            return fontSize;
         }
     }
 }

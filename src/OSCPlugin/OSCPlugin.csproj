@@ -11,6 +11,8 @@
     <AssemblyName>OSCPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
     <BaseIntermediateOutputPath>$(SolutionDir)..\obj\</BaseIntermediateOutputPath>
@@ -44,8 +46,25 @@
     <Reference Include="SharpOSC">
       <HintPath>..\..\..\..\SharpOSC\v0.1.1.0\Release\SharpOSC.dll</HintPath>
     </Reference>
+    <Reference Include="SkiaSharp, Version=2.88.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\SkiaSharp.2.88.6\lib\net462\SkiaSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -67,116 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="metadata\LoupedeckPackage.yaml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob000.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob001.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob002.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob003.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob004.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob005.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob006.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob007.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob008.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob009.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob010.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob011.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob012.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob013.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob014.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob015.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob016.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob017.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob018.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob019.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob020.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob021.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob022.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob023.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob024.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob025.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob026.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob027.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob028.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob029.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob030.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob031.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob032.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob033.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob034.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob035.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob036.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob037.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob038.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob039.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob040.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob041.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob042.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob043.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob044.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob045.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob046.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob047.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob048.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob049.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob050.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob051.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob052.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob053.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob054.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob055.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob056.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob057.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob058.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob059.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob060.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob061.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob062.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob063.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob064.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob065.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob066.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob067.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob068.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob069.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob070.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob071.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob072.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob073.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob074.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob075.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob076.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob077.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob078.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob079.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob080.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob081.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob082.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob083.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob084.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob085.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob086.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob087.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob088.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob089.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob090.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob091.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob092.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob093.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob094.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob095.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob096.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob097.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob098.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob099.png" />
-    <EmbeddedResource Include="Sprites\NormalKnobOSC\Knob100.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sprites\Button\ButtonOn.png" />
-    <EmbeddedResource Include="Sprites\Button\ButtonOff.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="metadata\Icon16x16.png" />
@@ -189,4 +102,13 @@
     <PostBuildEvent Condition="$(OS) == 'Windows_NT'">call "$(ProjectDir)BuildEvents\postbuild.cmd" "$(ProjectDir)" "$(TargetDir)"</PostBuildEvent>
     <PostBuildEvent Condition="$(OS) != 'Windows_NT'">sh "$(ProjectDir)BuildEvents\postbuild" "$(ProjectDir)" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\SkiaSharp.NativeAssets.macOS.2.88.6\build\net462\SkiaSharp.NativeAssets.macOS.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.macOS.2.88.6\build\net462\SkiaSharp.NativeAssets.macOS.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SkiaSharp.NativeAssets.macOS.2.88.6\build\net462\SkiaSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.NativeAssets.macOS.2.88.6\build\net462\SkiaSharp.NativeAssets.macOS.targets'))" />
+    <Error Condition="!Exists('..\packages\SkiaSharp.NativeAssets.Win32.2.88.6\build\net462\SkiaSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.NativeAssets.Win32.2.88.6\build\net462\SkiaSharp.NativeAssets.Win32.targets'))" />
+  </Target>
+  <Import Project="..\packages\SkiaSharp.NativeAssets.Win32.2.88.6\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.Win32.2.88.6\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
 </Project>
