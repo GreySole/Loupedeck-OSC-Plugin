@@ -25,6 +25,10 @@ namespace Loupedeck.OSCPlugin
                     .SetPlaceholder("OSC Address")
             );
             this.ActionEditor.AddControlEx(
+                    new ActionEditorTextbox("buttonvalue", "Value")
+                    .SetPlaceholder("Value to send when button pressed (1 if not set)")
+            );
+            this.ActionEditor.AddControlEx(
                     new ActionEditorListbox("type", "Button Type").SetRequired()
             );
             this.ActionEditor.AddControlEx(
@@ -76,6 +80,11 @@ namespace Loupedeck.OSCPlugin
         {
             var type = actionParameter.GetString("type");
             var address = actionParameter.GetString("address");
+            var value = actionParameter.GetInt32("buttonvalue");
+            if(value == 0)
+            {
+                value = 1;
+            }
             if (!_values.ContainsKey(address))
             {
                 _values[address] = 0;
@@ -83,17 +92,17 @@ namespace Loupedeck.OSCPlugin
             switch (type)
             {
                 case "basic":
-                    OSCPlugin.sendOSC(address, 1);
+                    OSCPlugin.sendOSC(address, value);
                     this.ActionImageChanged();
                     break;
                 case "toggle":
-                    _values[address] = _values[address] == 1 ? 0 : 1;
+                    _values[address] = _values[address] == 0 ? value : 0;
                     OSCPlugin.sendOSC(address, _values[address]);
                     this.ActionImageChanged();
                     break;
                 case "momentary":
-                    _values[address] = 1;
-                    OSCPlugin.sendOSC(address, 1);
+                    _values[address] = value;
+                    OSCPlugin.sendOSC(address, _values[address]);
                     this.ActionImageChanged();
                     Thread.Sleep(250);
                     _values[address] = 0;

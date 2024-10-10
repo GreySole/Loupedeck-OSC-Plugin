@@ -41,6 +41,7 @@ namespace Loupedeck.OSCPlugin
             var pluginDataDirectory = this.GetPluginDataDirectory();
             var ipPath = Path.Combine(pluginDataDirectory, "sender_ip");
             var portPath = Path.Combine(pluginDataDirectory, "sender_port");
+            var listenerPortPath = Path.Combine(pluginDataDirectory, "listener_port");
 
             PluginLog.Info("CHECKING DIRS");
             var ipSet = IoHelpers.FileExists(ipPath);
@@ -51,7 +52,7 @@ namespace Loupedeck.OSCPlugin
             {
                 this._senderIP = "";
                 this._senderPort = 0;
-                this._listenerPort = 0;
+                //this._listenerPort = 0;
                 this.OnPluginStatusChanged(Loupedeck.PluginStatus.Warning, "Defaults not set! Configure a SetDefaults button to set OSC ip and port. You only need to do this once.");
             }
             else
@@ -67,6 +68,12 @@ namespace Loupedeck.OSCPlugin
                     var rawPort = streamReader.ReadLine();
                     this._senderPort = Int32.Parse(rawPort);
                 }
+
+                /*using (var streamReader = new StreamReader(listenerPortPath))
+                {
+                    var rawListenerPort = streamReader.ReadLine();
+                    this._listenerPort = Int32.Parse(rawListenerPort);
+                }*/
                 this.OnPluginStatusChanged(Loupedeck.PluginStatus.Normal, $"Default set to {this._senderIP}:{this._senderPort}");
             }
         }
@@ -107,7 +114,19 @@ namespace Loupedeck.OSCPlugin
             {
                 this.OnPluginStatusChanged(Loupedeck.PluginStatus.Error, $"OSC Sender failed to start! IP:{_senderIP} PORT:{_senderPort}");
             }
-            
+
+            /*try
+            {
+                if (_listenerPort != 0)
+                {
+                    _udpListener = new UDPListener(_listenerPort);
+                }
+            }
+            catch
+            {
+                this.OnPluginStatusChanged(Loupedeck.PluginStatus.Error, $"OSC Listener failed to start! IP:{_senderIP} PORT:{_senderPort} LISTENER PORT: {_listenerPort}");
+            }*/
+
             PluginLog.Info($"Default set to {this._senderIP}:{this._senderPort}");
         }
 

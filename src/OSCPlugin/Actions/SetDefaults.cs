@@ -23,6 +23,12 @@
                 .SetPlaceholder("9000")
                 .SetRequired()
              );
+
+            this.ActionEditor.AddControlEx(
+                new ActionEditorTextbox(name: "listener_port", labelText: "Listener Port")
+                .SetPlaceholder("9001")
+                .SetRequired()
+             );
         }
 
         protected override Boolean RunCommand(ActionEditorActionParameters actionParameters)
@@ -31,6 +37,8 @@
             actionParameters.TryGetString("sender_ip", out sender_ip);
             var sender_port = "9000";
             actionParameters.TryGetString("sender_port", out sender_port);
+            var listener_port = "9001";
+            actionParameters.TryGetString("listener_port", out listener_port);
 
             var pluginDataDirectory = this.Plugin.GetPluginDataDirectory();
             if(IoHelpers.EnsureDirectoryExists(pluginDataDirectory))
@@ -45,6 +53,12 @@
                 using (var streamWriter = new StreamWriter(portPath))
                 {
                     streamWriter.WriteLine(sender_port);
+                }
+
+                var listenerPortPath = Path.Combine(pluginDataDirectory, "listener_port");
+                using (var streamWriter = new StreamWriter(listenerPortPath))
+                {
+                    streamWriter.WriteLine(listener_port);
                 }
             }
             ((OSCPlugin)this.Plugin).restartOSC();
