@@ -3,3 +3,6 @@ Sends OSC messages to a defined IP and port. Create a Set Defaults command to sa
 - Create basic, toggle, and momentary buttons
 - Create raw knobs that send an unconstrained accumilation or a normal knob that goes from 0-100
 - Create custom knob to set your own min, max, and step
+- Choose from 7 colors for your buttons and knobs
+
+Uses the OSC library: [SharpOSC](https://github.com/ValdemarOrn/SharpOSC)
