@@ -1,114 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{30865DBB-7471-49A4-9700-61C364D3D909}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
     <RootNamespace>Loupedeck.OSCPlugin</RootNamespace>
-    <AssemblyName>OSCPlugin</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup>
-    <BaseIntermediateOutputPath>$(SolutionDir)..\obj\</BaseIntermediateOutputPath>
-    <BaseOutputPath>$(SolutionDir)..\bin\</BaseOutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath Condition="$(OS) == 'Windows_NT'">$(LocalAppData)\Loupedeck\Plugins\OSC\win\</OutputPath>
-    <OutputPath Condition="$(OS) != 'Windows_NT'">$(HOME)/.local/share/Loupedeck/Plugins/OSC/mac/</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+    <PluginApiDir Condition="$(OS) == 'Windows_NT'">C:\Program Files\Logi\LogiPluginService\</PluginApiDir>
+    <PluginApiDir Condition="$(OS) != 'Windows_NT'">/Applications/Utilities/LogiPluginService.app/Contents/MonoBundle/</PluginApiDir>
+
+    <PluginDir Condition="$(OS) == 'Windows_NT'">$(LocalAppData)\Logi\LogiPluginService\Plugins\</PluginDir>
+    <PluginDir Condition="$(OS) != 'Windows_NT'">~/Library/Application\ Support/Logi/LogiPluginService/Plugins/</PluginDir>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath Condition="$(OS) == 'Windows_NT'">$(BaseOutputPath)$(Configuration)\win\</OutputPath>
-    <OutputPath Condition="$(OS) != 'Windows_NT'">$(BaseOutputPath)$(Configuration)/mac/</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="PluginApi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath Condition="$(OS) == 'Windows_NT'">C:\Program Files (x86)\Loupedeck\Loupedeck2\PluginApi.dll</HintPath>
-      <HintPath Condition="$(OS) != 'Windows_NT'">/Applications/Loupedeck.app/Contents/MonoBundle/PluginApi.dll</HintPath>
+    <PackageReference Include="SkiaSharp" Version="2.88.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PluginApi">
+      <HintPath>$(PluginApiDir)PluginApi.dll</HintPath>
     </Reference>
     <Reference Include="SharpOSC">
-      <HintPath>..\..\..\..\SharpOSC\v0.1.1.0\Release\SharpOSC.dll</HintPath>
+      <HintPath>G:\Downloads\Latest\v0.1.1.0\Release\SharpOSC.dll</HintPath>
     </Reference>
-    <Reference Include="SkiaSharp, Version=2.88.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\SkiaSharp.2.88.6\lib\net462\SkiaSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Actions\ButtonOSC.cs" />
-    <Compile Include="Actions\KnobOSC.cs" />
-    <Compile Include="Actions\CustomKnobOSC.cs" />
-    <Compile Include="Actions\SetDefaults.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OSCApplication.cs" />
-    <Compile Include="OSCPlugin.cs" />
-    <Compile Include="Helpers\PluginLog.cs" />
-    <Compile Include="Helpers\PluginResources.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="metadata\LoupedeckPackage.yaml" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="metadata\Icon16x16.png" />
-    <EmbeddedResource Include="metadata\Icon256x256.png" />
-    <EmbeddedResource Include="metadata\Icon32x32.png" />
-    <EmbeddedResource Include="metadata\Icon48x48.png" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent Condition="$(OS) == 'Windows_NT'">call "$(ProjectDir)BuildEvents\postbuild.cmd" "$(ProjectDir)" "$(TargetDir)"</PostBuildEvent>
-    <PostBuildEvent Condition="$(OS) != 'Windows_NT'">sh "$(ProjectDir)BuildEvents\postbuild" "$(ProjectDir)" "$(TargetDir)"</PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\packages\SkiaSharp.NativeAssets.macOS.2.88.6\build\net462\SkiaSharp.NativeAssets.macOS.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.macOS.2.88.6\build\net462\SkiaSharp.NativeAssets.macOS.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\SkiaSharp.NativeAssets.macOS.2.88.6\build\net462\SkiaSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.NativeAssets.macOS.2.88.6\build\net462\SkiaSharp.NativeAssets.macOS.targets'))" />
-    <Error Condition="!Exists('..\packages\SkiaSharp.NativeAssets.Win32.2.88.6\build\net462\SkiaSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.NativeAssets.Win32.2.88.6\build\net462\SkiaSharp.NativeAssets.Win32.targets'))" />
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Condition="$(OS) == 'Windows_NT'" Command="echo $(OutputPath) &gt; &quot;$(PluginDir)$(ProjectName).link&quot;" />
+    <Exec Condition="$(OS) != 'Windows_NT'" Command="echo $(OutputPath) &gt; $(PluginDir)$(ProjectName).link" />
   </Target>
-  <Import Project="..\packages\SkiaSharp.NativeAssets.Win32.2.88.6\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.Win32.2.88.6\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
+
+  <Target Name="CopyMetadata" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <MetadataFiles Include="metadata\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(MetadataFiles)" DestinationFolder="$(OutputPath)metadata" />
+  </Target>
+
+  <Target Name="PluginClean" AfterTargets="CoreClean">
+    <Delete Condition="$(OS) == 'Windows_NT'" Files="$(PluginDir)$(ProjectName).link" />
+    <Exec Condition="$(OS) != 'Windows_NT'" Command="rm -f $(PluginDir)$(ProjectName).link" />
+
+    <RemoveDir Directories="$(OutputPath)metadata" />
+  </Target>
+
 </Project>

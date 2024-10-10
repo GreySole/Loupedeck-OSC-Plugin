@@ -21,7 +21,7 @@ version: 1.0
 author: Grey Sole
 
 # Copyright information.
-copyright: Copyright © 2023 Grey Sole. All rights reserved.
+copyright: Copyright © 2024 Grey Sole. All rights reserved.
 
 
 # ==================================================================================================
@@ -30,15 +30,16 @@ copyright: Copyright © 2023 Grey Sole. All rights reserved.
 
 # Location of plugin files on Windows (relative to the plugin base directory).
 # This parameter is required to support Windows.
-pluginFolderWin: win
+pluginFolderWin: .
 
 # Location of plugin files on macOS (relative to the plugin base directory).
 # This parameter is required to support Mac.
-#pluginFolderMac: mac
+#pluginFolderMac: .
 
-# List of supported devices.
+# List of devices the plugin is optimized for.
 supportedDevices:
-    # LoupedeckCtFamily covers the following devices: Loupedeck CT, Live and Live S, and Razer Stream Controller.
+    # LoupedeckCtFamily covers the following devices: Loupedeck CT, Live and Live S,
+    # Razer Stream Controller, and Razer Stream Controller X.
     - LoupedeckCtFamily
 
     # LoupedeckPlusFamily covers Loupedeck+ device. Uncomment the following line to support Loupedeck+.
@@ -53,7 +54,7 @@ pluginCapabilities:
     #- ActivatesApplication
 
 # Minimum Loupedeck version supported by the plugin.
-minimumLoupedeckVersion: 5.7
+minimumLoupedeckVersion: 6.0
 
 
 # ==================================================================================================
